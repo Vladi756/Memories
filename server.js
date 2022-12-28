@@ -13,5 +13,7 @@ const PORT = process.env.PORT || 3500
 // search in this directory, then go to the 'public' directory
 app.use('/', express.static(path.join(__dirname, '/public')))
 
+app.use('/', require('./routes/root'))
+
 // run the server 
 app.listen(PORT, () => console.log(`Running on port: ${PORT}.`))
