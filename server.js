@@ -4,18 +4,20 @@ const app = express()
 
 // importing path 
 const path = require('path')
-
+// importing logging middleware
+const { logger } = require('./middleware/logger')
 // which port the application is to run on
 const PORT = process.env.PORT || 3500
 
-// Routes
+// Adding Middleware to process and parse JSON 
+app.use(express.json())
 
 // telling express where to find static files
-// __dirname is a global variable understood by express, 
-// an environment variable that tells you the absolute path of the directory 
+// __dirname is an environment variable that tells you the absolute path of the directory 
 // containing the currently executing file.
-app.use('/', express.static(path.join(__dirname, '/public')))
+app.use('/', express.static(path.join(__dirname, 'public')))
 
+// Root 
 app.use('/', require('./routes/root'))
 
 // A 'catch-all' that goes at the end to handle 404 responses. 
@@ -25,7 +27,7 @@ app.all('*', (req, res) => {
     // handling json, html and other requests
     if(req.accepts('html')) {
         // route to 404 view
-        res.sendFile(path.join(__dirname, '/views/404.html'))
+        res.sendFile(path.join(__dirname, 'views', '404.html'))
     } else if(req.accepts('json')) {
         res.json({message: '404: Not Found'})
     } else {
