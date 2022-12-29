@@ -15,4 +15,4 @@ const errorHandler = (err, req, res, next) => {
 }
 
 // export middleware 
-module.exports - errorHandler
+module.exports = errorHandler

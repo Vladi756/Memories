@@ -2,19 +2,26 @@
 const express = require('express')
 const app = express()
 
-// importing path 
+// importing dependencies - 3rd party middleware 
 const path = require('path')
-// importing logging middleware
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+const corsOptions = require('./config/corsOptions')
+
+// importing custom middleware
 const { logger } = require('./middleware/logger')
-// importing error handling middleware 
 const errorHandler = require('./middleware/errorHandler')
+
 // which port the application is to run on
 const PORT = process.env.PORT || 3500
 
 app.use(logger)
 
+// using CORS with defined options
+app.use(cors(corsOptions))
 // Adding Middleware to process and parse JSON 
 app.use(express.json())
+app.use(cookieParser())
 
 // telling express where to find static files
 // __dirname is an environment variable that tells you the absolute path of the directory 
