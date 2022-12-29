@@ -6,8 +6,12 @@ const app = express()
 const path = require('path')
 // importing logging middleware
 const { logger } = require('./middleware/logger')
+// importing error handling middleware 
+const errorHandler = require('./middleware/errorHandler')
 // which port the application is to run on
 const PORT = process.env.PORT || 3500
+
+app.use(logger)
 
 // Adding Middleware to process and parse JSON 
 app.use(express.json())
@@ -34,6 +38,8 @@ app.all('*', (req, res) => {
         res.type('txt').send('404: Not Found')
     }
 })
+
+app.use(errorHandler)
 
 // Run the server 
 app.listen(PORT, () => console.log(`Running on port: ${PORT}.`))
