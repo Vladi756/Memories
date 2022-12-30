@@ -1,3 +1,8 @@
+// can use dotenv in any file now 
+require('dotenv').config()
+
+console.log(process.env.NODE_ENV)
+
 // creates an express app 
 const express = require('express')
 const app = express()
