@@ -1,14 +1,11 @@
-// connecting mongoDB to application
 const mongoose = require('mongoose')
 
 const connectDB = async () => {
-    try{
-        // connecting using the URI generated at mongoDB
+    try {
         await mongoose.connect(process.env.DATABASE_URI)
-    } catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
 
-// exporting database connecting function
 module.exports = connectDB

@@ -16,9 +16,15 @@ const corsOptions = require('./config/corsOptions')
 // importing custom middleware
 const { logger } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
+const { logEvents } = require('./middleware/logger')
+
+const connectDB = require('./config/dbConn')
+const mongoose = require('mongoose')
 
 // which port the application is to run on
 const PORT = process.env.PORT || 3500
+// connect with MongoDB
+connectDB()
 
 app.use(logger)
 
@@ -53,5 +59,14 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler)
 
-// Run the server 
-app.listen(PORT, () => console.log(`Running on port: ${PORT}.`))
+mongoose.connection.once('open', () =>{
+    console.log('Connected to MongoDB')
+    // Run the server 
+    app.listen(PORT, () => console.log(`Running on port: ${PORT}.`))
+})
+
+// erro listener
+mongoose.connection.once('error', (err) =>{
+    console.log(err)
+    logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoLog.log')
+})
