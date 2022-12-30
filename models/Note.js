@@ -23,5 +23,5 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 })
-// exporting userschema created above
+// exporting schema created above
 module.exports = mongoose.model('User', useSchema)
