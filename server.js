@@ -39,8 +39,10 @@ app.use(cookieParser())
 // containing the currently executing file.
 app.use('/', express.static(path.join(__dirname, 'public')))
 
-// Root 
+// Routes
 app.use('/', require('./routes/root'))
+app.use('/users', require('./routes/userRoutes'))
+
 
 // A 'catch-all' that goes at the end to handle 404 responses. 
 // Like a default case in a switch statement
